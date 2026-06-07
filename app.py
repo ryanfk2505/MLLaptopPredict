@@ -15,7 +15,7 @@ st.set_page_config(
     layout="wide"
 )
 
-# --- INJEKSI CSS KUSTOM UNTUK DESAIN KEREN & MODERN ---
+# --- INJEKSI CSS KUSTOM YANG MENDUKUNG DARK & LIGHT MODE ---
 st.markdown("""
     <style>
     /* Mengimpor Google Font Premium */
@@ -26,67 +26,82 @@ st.markdown("""
         font-family: 'Plus Jakarta Sans', sans-serif !important;
     }
     
-    /* Styling Judul Utama */
+    /* Styling Judul Utama dengan Gradasi Lebih Tajam & Terlihat di Dark Mode */
     .main-title {
-        font-size: 2.8rem !important;
-        font-weight: 700 !important;
-        background: linear-gradient(135deg, #2563EB, #10B981);
+        font-size: 3rem !important;
+        font-weight: 800 !important;
+        background: linear-gradient(135deg, #3B82F6 0%, #10B981 50%, #6366F1 100%);
         -webkit-background-clip: text;
         -webkit-text-fill-color: transparent;
         margin-bottom: 0.2rem;
+        display: inline-block;
     }
     
     .sub-title {
         font-size: 1.1rem;
-        color: #64748B;
+        color: #94A3B8;
         margin-bottom: 2rem;
     }
     
-    /* Styling Kartu Info & Hasil */
+    /* Styling Kartu Hasil Pencarian (Expander) agar adaptif di Dark Mode */
     div[data-testid="stExpander"] {
-        background-color: #FFFFFF !important;
-        border: 1px solid #E2E8F0 !important;
+        background-color: #1E293B !important; /* Warna latar gelap elegan */
+        border: 1px solid #334155 !important;
         border-radius: 12px !important;
-        box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05), 0 2px 4px -1px rgba(0, 0, 0, 0.03) !important;
+        box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.2) !important;
         margin-bottom: 1rem !important;
         transition: all 0.3s ease !important;
     }
     
     div[data-testid="stExpander"]:hover {
         transform: translateY(-2px);
-        box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05) !important;
+        box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.4) !important;
         border-color: #3B82F6 !important;
     }
+
+    /* Memaksa teks judul expander agar berwarna cerah dan kontras */
+    div[data-testid="stExpander"] summary p {
+        color: #F8FAFC !important;
+        font-weight: 600 !important;
+    }
     
-    /* Panel Ringkasan Filter */
+    /* Panel Ringkasan Filter / Parameter Aktif */
     .filter-card {
-        background: linear-gradient(145deg, #F8FAFC, #F1F5F9);
+        background: #1E293B;
         padding: 1.5rem;
         border-radius: 14px;
-        border: 1px solid #E2E8F0;
+        border: 1px solid #334155;
+        color: #F8FAFC !important;
     }
     
     .filter-card h4 {
-        color: #1E293B;
+        color: #3B82F6 !important;
         margin-top: 0;
-        border-bottom: 2px solid #E2E8F0;
+        border-bottom: 2px solid #334155;
         padding-bottom: 0.5rem;
+        font-weight: 700;
+    }
+
+    .filter-card p {
+        color: #CBD5E1 !important;
+        margin-bottom: 0.5rem;
     }
     
     /* Badge Harga Premium */
     .price-badge {
-        background-color: #EEF2FF;
-        color: #4F46E5;
+        background-color: #1E1B4B;
+        color: #818CF8;
         padding: 0.25rem 0.75rem;
         border-radius: 20px;
         font-weight: 600;
         font-size: 0.95rem;
+        border: 1px solid #312E81;
     }
     
     /* Footer Modis */
     .footer-text {
         text-align: center;
-        color: #94A3B8;
+        color: #64748B;
         font-size: 0.85rem;
         margin-top: 3rem;
     }
@@ -240,6 +255,7 @@ with col2:
                 for idx, row in results.iterrows():
                     price_conv = convert_currency(row['Price'], 'INR', selected_currency, exchange_rates)
                     
+                    # Menggabungkan teks nama dan harga untuk judul expander
                     expander_title = f"{row['Model'][:55]}... — {format_currency(price_conv, selected_currency)}"
                     
                     with st.expander(expander_title):
@@ -247,7 +263,7 @@ with col2:
                         with c1:
                             st.markdown(f"**Harga Resmi:** <span class='price-badge'>{format_currency(price_conv, selected_currency)}</span>", unsafe_allow_html=True)
                             st.markdown(f"**Kapasitas RAM:** `{row['RAM_GB']:.0f} GB` International Standard")
-                            st.markdown(f"**Penyimpanan SSD:** `{row['SSD_GB']:.0f} GB NVMe`高速")
+                            st.markdown(f"**Penyimpanan SSD:** `{row['SSD_GB']:.0f} GB NVMe` ")
                         with c2:
                             st.markdown(f"**Dimensi Layar:** `{row['Inches']:.1f}\"` Inci IPS/OLED")
                             st.markdown(f"**Central Processor:** `{row['CPU_Detail'][:50]}`")
@@ -259,6 +275,6 @@ with col2:
 
 # Footer dengan gaya kustom minimalis
 st.markdown("""
-    <hr style="border-top: 1px solid #E2E8F0; margin-top: 5rem;">
+    <hr style="border-top: 1px solid #334155; margin-top: 5rem;">
     <p class="footer-text">Powered by <b>Streamlit Engine</b> & <b>Scikit-Learn KNN Algorithm</b> • © 2026 Laptop Recommendation System</p>
 """, unsafe_allow_html=True)
