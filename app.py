@@ -11,103 +11,27 @@ warnings.filterwarnings('ignore')
 # Page config
 st.set_page_config(
     page_title="Laptop Recommendation System",
-    page_icon="💻",
+    page_icon=None,
     layout="wide"
 )
 
-# Custom CSS for gradient design
+# Custom CSS for gradient background and styling
 st.markdown("""
 <style>
-    /* Gradient background for main container */
+    /* Main container gradient background */
     .stApp {
         background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
     }
     
-    /* Main content background with semi-transparent white */
+    /* Main content area background */
     .main > div {
         background: rgba(255, 255, 255, 0.95);
-        border-radius: 20px;
+        border-radius: 15px;
         padding: 20px;
         margin: 10px;
     }
     
-    /* Sidebar gradient */
-    .css-1d391kg, .css-12oz5g7 {
-        background: linear-gradient(180deg, #2c3e50 0%, #3498db 100%);
-    }
-    
-    /* Sidebar text color */
-    .css-1d391kg .sidebar-content, .css-12oz5g7 .sidebar-content {
-        color: white;
-    }
-    
-    /* Sidebar labels */
-    .css-1d391kg label, .css-12oz5g7 label {
-        color: white !important;
-        font-weight: 600;
-    }
-    
-    /* Sidebar selectbox and number input */
-    .css-1d391kg .stSelectbox div, .css-12oz5g7 .stSelectbox div,
-    .css-1d391kg .stNumberInput div, .css-12oz5g7 .stNumberInput div {
-        background-color: rgba(255, 255, 255, 0.9);
-        border-radius: 10px;
-    }
-    
-    /* Button gradient */
-    .stButton > button {
-        background: linear-gradient(90deg, #667eea 0%, #764ba2 100%);
-        color: white;
-        border: none;
-        border-radius: 10px;
-        padding: 10px 20px;
-        font-weight: bold;
-        transition: transform 0.3s ease;
-    }
-    
-    .stButton > button:hover {
-        transform: scale(1.05);
-        background: linear-gradient(90deg, #764ba2 0%, #667eea 100%);
-        color: white;
-    }
-    
-    /* Expander gradient */
-    .streamlit-expanderHeader {
-        background: linear-gradient(90deg, #f093fb 0%, #f5576c 100%);
-        color: white;
-        border-radius: 10px;
-        font-weight: bold;
-    }
-    
-    .streamlit-expanderHeader:hover {
-        background: linear-gradient(90deg, #f5576c 0%, #f093fb 100%);
-    }
-    
-    /* Success message */
-    .stAlert {
-        background: linear-gradient(90deg, #00b09b, #96c93d);
-        color: white;
-        border: none;
-        border-radius: 10px;
-    }
-    
-    /* Error message */
-    .stAlert.stAlertError {
-        background: linear-gradient(90deg, #ff6b6b, #ee5a24);
-        color: white;
-        border: none;
-        border-radius: 10px;
-    }
-    
-    /* Info message */
-    .stAlert.stAlertInfo {
-        background: linear-gradient(90deg, #4facfe, #00f2fe);
-        color: white;
-        border: none;
-        border-radius: 10px;
-    }
-    
-    /* Title gradient */
+    /* Title styling */
     h1, h2, h3 {
         background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
         -webkit-background-clip: text;
@@ -116,58 +40,112 @@ st.markdown("""
         font-weight: bold;
     }
     
-    /* Card-like containers for filters */
-    .css-1v0mbdj {
-        background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
-        border-radius: 15px;
-        padding: 15px;
-        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    /* Sidebar styling */
+    .css-1d391kg, .css-163ttbj, .stSidebar {
+        background: linear-gradient(180deg, #2d1b4e 0%, #1a0f2e 100%);
     }
     
-    /* Slider styling */
-    .stSlider > div > div > div {
-        background: linear-gradient(90deg, #667eea, #764ba2);
+    /* Sidebar text color */
+    .stSidebar .stMarkdown, .stSidebar label, .stSidebar .stSelectbox label, .stSidebar .stNumberInput label {
+        color: #ffffff !important;
     }
     
-    /* Progress bar */
-    .stProgress > div > div > div {
-        background: linear-gradient(90deg, #667eea, #764ba2);
+    /* Sidebar header */
+    .stSidebar h1, .stSidebar h2, .stSidebar h3 {
+        color: #ffffff !important;
+        -webkit-text-fill-color: #ffffff !important;
+        background: none !important;
     }
     
-    /* Tabs styling */
-    .stTabs [data-baseweb="tab-list"] {
-        gap: 8px;
-    }
-    
-    .stTabs [data-baseweb="tab"] {
+    /* Button styling */
+    .stButton > button {
         background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-        border-radius: 10px;
         color: white;
-        padding: 10px 20px;
+        border: none;
+        padding: 10px 24px;
+        border-radius: 8px;
+        font-weight: bold;
+        transition: transform 0.2s;
+    }
+    
+    .stButton > button:hover {
+        transform: scale(1.02);
+        background: linear-gradient(135deg, #764ba2 0%, #667eea 100%);
+        color: white;
+    }
+    
+    /* Expander styling */
+    .streamlit-expanderHeader {
+        background: linear-gradient(135deg, #f5f0ff 0%, #e8e0ff 100%);
+        border-radius: 10px;
+        font-weight: bold;
+    }
+    
+    /* Info box styling */
+    .stAlert {
+        background: linear-gradient(135deg, #667eea20 0%, #764ba220 100%);
+        border-radius: 10px;
+    }
+    
+    /* Success message styling */
+    .stAlert[data-baseweb="notification"] {
+        background: linear-gradient(135deg, #4caf5020 0%, #45a04920 100%);
+    }
+    
+    /* Error message styling */
+    .stAlert[data-baseweb="notification"]:has(div[data-testid="stMarkdownContainer"] p:contains("Error")) {
+        background: linear-gradient(135deg, #f4433620 0%, #d32f2f20 100%);
+    }
+    
+    /* Card/Expander content text */
+    .streamlit-expanderContent {
+        background: white;
+        border-radius: 10px;
     }
     
     /* Metric cards */
-    .stMetric {
-        background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
-        border-radius: 15px;
-        padding: 15px;
-        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    div[data-testid="stMetric"] {
+        background: linear-gradient(135deg, #667eea10 0%, #764ba210 100%);
+        border-radius: 10px;
+        padding: 10px;
     }
     
-    /* Footer gradient */
+    /* Column text contrast */
+    .stMarkdown, p, span, div {
+        color: #1a1a2e;
+    }
+    
+    /* Sidebar selectbox and number input text */
+    .stSidebar .stSelectbox div, .stSidebar .stNumberInput input {
+        color: #1a1a2e !important;
+        background: white !important;
+    }
+    
+    /* Sidebar slider labels */
+    .stSidebar .stSlider label {
+        color: #ffffff !important;
+    }
+    
+    /* Footer styling */
     footer {
-        background: linear-gradient(90deg, #2c3e50, #3498db);
-        color: white;
-        padding: 10px;
-        border-radius: 10px;
-        text-align: center;
+        color: rgba(255,255,255,0.7) !important;
+    }
+    
+    /* Column containers in main area */
+    .stColumn > div {
+        background: transparent;
+    }
+    
+    /* Expander text contrast */
+    .streamlit-expanderHeader p {
+        color: #4a4a6a !important;
     }
 </style>
 """, unsafe_allow_html=True)
 
 # Title
-st.title("💻 Laptop Recommendation System")
-st.markdown("### Temukan laptop terbaik sesuai budget dan kebutuhan Anda!")
+st.title("Laptop Recommendation System")
+st.markdown("Temukan laptop terbaik sesuai budget dan kebutuhan Anda")
 st.markdown("---")
 
 # Load data
@@ -201,8 +179,14 @@ def convert_currency(amount_inr, from_currency='INR', to_currency='IDR', exchang
     return amount_inr
 
 def format_currency(amount, currency):
-    symbols = {'INR': '₹', 'IDR': 'Rp', 'USD': '$', 'EUR': '€', 'GBP': '£', 'JPY': '¥', 'SGD': 'S$', 'MYR': 'RM'}
-    symbol = symbols.get(currency, '')
+    symbols = {'INR': 'Rp', 'IDR': 'Rp', 'USD': '$', 'EUR': '€', 'GBP': '£', 'JPY': '¥', 'SGD': 'S$', 'MYR': 'RM'}
+    if currency == 'IDR':
+        symbol = 'Rp'
+    elif currency == 'INR':
+        symbol = 'Rs'
+    else:
+        symbol = symbols.get(currency, '')
+    
     if currency == 'IDR':
         return f"{symbol} {amount:,.0f}"
     return f"{symbol} {amount:,.2f}"
@@ -213,17 +197,17 @@ try:
     knn_model, scaler, label_encoders = load_models()
     unique_vals = load_unique_values()
     exchange_rates = unique_vals.get('exchange_rates', {'INR': 1, 'IDR': 191.5})
-    st.success("✅ Data dan model berhasil dimuat!")
+    st.success("Data dan model berhasil dimuat")
 except Exception as e:
-    st.error(f"❌ Error: {e}")
+    st.error(f"Error: {e}")
     st.stop()
 
 # Sidebar filters
-st.sidebar.header("🔍 Filter Pencarian")
+st.sidebar.header("Filter Pencarian")
 
 # Pilihan mata uang
 currency = st.sidebar.selectbox(
-    "💱 Mata Uang",
+    "Mata Uang",
     options=['IDR (Rupiah)', 'INR (Rupee)'],
     index=0
 )
@@ -234,36 +218,36 @@ selected_currency = currency_map[currency]
 default_budget_inr = 50000
 default_budget = convert_currency(default_budget_inr, 'INR', selected_currency, exchange_rates)
 budget = st.sidebar.number_input(
-    f"💰 Budget Maksimal ({format_currency(0, selected_currency)[0]})",
+    f"Budget Maksimal ({format_currency(0, selected_currency)[0]})",
     min_value=0.0,
     value=float(default_budget),
     step=50000.0 if selected_currency == 'IDR' else 5.0
 )
 
 # RAM filter
-ram_min = st.sidebar.selectbox("💾 RAM Minimal (GB)", options=[None, 4, 8, 16, 32], format_func=lambda x: "Semua" if x is None else f"{x} GB")
+ram_min = st.sidebar.selectbox("RAM Minimal (GB)", options=[None, 4, 8, 16, 32], format_func=lambda x: "Semua" if x is None else f"{x} GB")
 
 # CPU filter
 cpu_options = ['Semua'] + unique_vals['cpu_details']
-cpu_detail = st.sidebar.selectbox("⚙️ CPU", options=cpu_options)
+cpu_detail = st.sidebar.selectbox("CPU", options=cpu_options)
 cpu_detail = None if cpu_detail == 'Semua' else cpu_detail
 
 # GPU filter
 gpu_options = ['Semua'] + unique_vals['gpu_details']
-gpu_detail = st.sidebar.selectbox("🎮 GPU", options=gpu_options)
+gpu_detail = st.sidebar.selectbox("GPU", options=gpu_options)
 gpu_detail = None if gpu_detail == 'Semua' else gpu_detail
 
 # Screen size
-screen_size = st.sidebar.slider("📺 Layar Minimal (inci)", min_value=10.0, max_value=18.0, value=13.0, step=0.1)
+screen_size = st.sidebar.slider("Layar Minimal (inci)", min_value=10.0, max_value=18.0, value=13.0, step=0.1)
 
 # Rating
-rating_min = st.sidebar.slider("⭐ Rating Minimal", 0, 100, 0, 5)
+rating_min = st.sidebar.slider("Rating Minimal", 0, 100, 0, 5)
 
 # Jumlah rekomendasi
-n_recs = st.sidebar.slider("📊 Jumlah Rekomendasi", 3, 10, 5)
+n_recs = st.sidebar.slider("Jumlah Rekomendasi", 3, 10, 5)
 
 # Search button
-search_button = st.sidebar.button("🔍 Cari Laptop", type="primary")
+search_button = st.sidebar.button("Cari Laptop", type="primary")
 
 # Konversi budget ke INR untuk filter
 budget_inr = convert_currency(budget, selected_currency, 'INR', exchange_rates)
@@ -289,37 +273,37 @@ def recommend_laptops(price_max_inr, ram_min=None, cpu_detail=None, gpu_detail=N
 col1, col2 = st.columns([1, 2])
 
 with col1:
-    st.markdown("### 📋 Filter")
-    st.markdown(f"**💰 Budget:** {format_currency(budget, selected_currency)}")
-    st.markdown(f"**💾 RAM:** {f'Minimal {ram_min} GB' if ram_min else 'Semua'}")
-    st.markdown(f"**⚙️ CPU:** {cpu_detail if cpu_detail else 'Semua'}")
-    st.markdown(f"**🎮 GPU:** {gpu_detail if gpu_detail else 'Semua'}")
-    st.markdown(f"**📺 Layar:** Minimal {screen_size}\"")
-    st.markdown(f"**⭐ Rating:** Minimal {rating_min}")
+    st.markdown("### Filter Yang Dipilih")
+    st.markdown(f"**Budget:** {format_currency(budget, selected_currency)}")
+    st.markdown(f"**RAM:** {f'Minimal {ram_min} GB' if ram_min else 'Semua'}")
+    st.markdown(f"**CPU:** {cpu_detail if cpu_detail else 'Semua'}")
+    st.markdown(f"**GPU:** {gpu_detail if gpu_detail else 'Semua'}")
+    st.markdown(f"**Layar:** Minimal {screen_size}\"")
+    st.markdown(f"**Rating:** Minimal {rating_min}")
 
 with col2:
     if search_button:
-        with st.spinner("Mencari..."):
+        with st.spinner("Mencari laptop yang sesuai..."):
             results = recommend_laptops(budget_inr, ram_min, cpu_detail, gpu_detail, screen_size, rating_min, n_recs)
             if len(results) > 0:
-                st.markdown(f"### 🎯 Hasil ({len(results)} laptop)")
+                st.markdown(f"### Hasil Rekomendasi ({len(results)} laptop)")
                 for idx, row in results.iterrows():
                     price_conv = convert_currency(row['Price'], 'INR', selected_currency, exchange_rates)
-                    with st.expander(f"💻 {row['Model'][:60]} - {format_currency(price_conv, selected_currency)}"):
+                    with st.expander(f"{row['Model'][:60]} - {format_currency(price_conv, selected_currency)}"):
                         c1, c2 = st.columns(2)
                         with c1:
-                            st.markdown(f"**💰 Harga:** {format_currency(price_conv, selected_currency)}")
-                            st.markdown(f"**💾 RAM:** {row['RAM_GB']:.0f} GB")
-                            st.markdown(f"**💽 SSD:** {row['SSD_GB']:.0f} GB")
+                            st.markdown(f"**Harga:** {format_currency(price_conv, selected_currency)}")
+                            st.markdown(f"**RAM:** {row['RAM_GB']:.0f} GB")
+                            st.markdown(f"**SSD:** {row['SSD_GB']:.0f} GB")
                         with c2:
-                            st.markdown(f"**📺 Layar:** {row['Inches']:.1f}\"")
-                            st.markdown(f"**⚙️ CPU:** {row['CPU_Detail'][:50]}")
-                            st.markdown(f"**🎮 GPU:** {row['GPU_Detail'][:50]}")
+                            st.markdown(f"**Layar:** {row['Inches']:.1f}\"")
+                            st.markdown(f"**CPU:** {row['CPU_Detail'][:50]}")
+                            st.markdown(f"**GPU:** {row['GPU_Detail'][:50]}")
             else:
-                st.error("❌ Tidak ada laptop yang sesuai")
+                st.error("Tidak ada laptop yang sesuai dengan kriteria Anda")
     else:
-        st.info("👈 Atur filter dan klik 'Cari Laptop'")
+        st.info("Atur filter di sidebar dan klik tombol 'Cari Laptop' untuk memulai")
 
 # Footer
 st.markdown("---")
-st.markdown("Made with ❤️ using Streamlit & Scikit-learn")
+st.markdown("Made with Streamlit & Scikit-learn")
