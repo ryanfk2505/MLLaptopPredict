@@ -140,14 +140,13 @@ try:
     knn_model, scaler, label_encoders = load_models()
     unique_vals = load_unique_values()
     exchange_rates = unique_vals.get('exchange_rates', {'INR': 1, 'IDR': 191.5})
-    # toast notifier yang lebih clean dibanding st.success permanen
-    st.toast("Data & model kecerdasan buatan berhasil dimuat!", icon="⚙️")
+    st.toast("Data dan model kecerdasan buatan berhasil dimuat!")
 except Exception as e:
     st.error(f"Error saat memuat sistem: {e}")
     st.stop()
 
-# Sidebar filters dengan desain rapi
-st.sidebar.markdown("### 🛠️ Filter Pencarian")
+# Sidebar filters
+st.sidebar.markdown("### Filter Pencarian")
 
 # Pilihan mata uang
 currency = st.sidebar.selectbox(
@@ -218,10 +217,9 @@ def recommend_laptops(price_max_inr, ram_min=None, cpu_detail=None, gpu_detail=N
 col1, col2 = st.columns([1, 2.5], gap="large")
 
 with col1:
-    # Membungkus Ringkasan Filter ke dalam komponen HTML Div bergaya kartu kustom
     st.markdown(f"""
     <div class="filter-card">
-        <h4>📋 Parameter Aktif</h4>
+        <h4>Parameter Aktif</h4>
         <p><b>Maks Budget:</b> {format_currency(budget, selected_currency)}</p>
         <p><b>RAM Minimal:</b> {f"{ram_min} GB" if ram_min else "Semua"}</p>
         <p><b>Spesifikasi CPU:</b> {cpu_detail if cpu_detail else "Semua"}</p>
@@ -237,28 +235,27 @@ with col2:
             results = recommend_laptops(budget_inr, ram_min, cpu_detail, gpu_detail, screen_size, rating_min, n_recs)
             
             if len(results) > 0:
-                st.markdown(### `Hasil Pencarian ({len(results)} Laptop Ditemukan)`)
+                st.markdown(f"### Hasil Pencarian ({len(results)} Laptop Ditemukan)")
                 
                 for idx, row in results.iterrows():
                     price_conv = convert_currency(row['Price'], 'INR', selected_currency, exchange_rates)
                     
-                    # Judul expander kustom menggabungkan teks & badge HTML
-                    expander_title = f"✨ {row['Model'][:55]}... — {format_currency(price_conv, selected_currency)}"
+                    expander_title = f"{row['Model'][:55]}... — {format_currency(price_conv, selected_currency)}"
                     
                     with st.expander(expander_title):
                         c1, c2 = st.columns(2)
                         with c1:
-                            st.markdown(f"**💰 Harga Resmi:** <span class='price-badge'>{format_currency(price_conv, selected_currency)}</span>", unsafe_allow_html=True)
-                            st.markdown(f"**🧠 Kapasitas RAM:** `{row['RAM_GB']:.0f} GB` International Standard")
-                            st.markdown(f"**💾 Penyimpanan SSD:** `{row['SSD_GB']:.0f} GB NVMe`高速")
+                            st.markdown(f"**Harga Resmi:** <span class='price-badge'>{format_currency(price_conv, selected_currency)}</span>", unsafe_allow_html=True)
+                            st.markdown(f"**Kapasitas RAM:** `{row['RAM_GB']:.0f} GB` International Standard")
+                            st.markdown(f"**Penyimpanan SSD:** `{row['SSD_GB']:.0f} GB NVMe`高速")
                         with c2:
-                            st.markdown(f"**🖥️ Dimensi Layar:** `{row['Inches']:.1f}\"` Inci IPS/OLED")
-                            st.markdown(f"**⚡ Central Processor:** `{row['CPU_Detail'][:50]}`")
-                            st.markdown(f"**🎮 Graphics Card:** `{row['GPU_Detail'][:50]}`")
+                            st.markdown(f"**Dimensi Layar:** `{row['Inches']:.1f}\"` Inci IPS/OLED")
+                            st.markdown(f"**Central Processor:** `{row['CPU_Detail'][:50]}`")
+                            st.markdown(f"**Graphics Card:** `{row['GPU_Detail'][:50]}`")
             else:
                 st.error("Kombinasi filter terlalu ketat. Tidak ada laptop yang sesuai dengan kriteria dan budget Anda. Silakan naikkan budget atau kurangi filter spesifikasi.")
     else:
-        st.info("💡 Atur preferensi Anda di panel sebelah kiri, kemudian klik tombol 'Cari Laptop Terbaik' untuk memulai komparasi data.")
+        st.info("Atur preferensi Anda di panel sebelah kiri, kemudian klik tombol 'Cari Laptop Terbaik' untuk memulai komparasi data.")
 
 # Footer dengan gaya kustom minimalis
 st.markdown("""
