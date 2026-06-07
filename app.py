@@ -124,6 +124,19 @@ st.markdown("""
         font-size: 0.8rem;
         margin-top: 3rem;
     }
+
+@import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400;600;800&family=Plus+Jakarta+Sans:wght@400;500&display=swap');
+
+/* Ubah Font Global (Untuk Judul & Menu) */
+html, body, [data-testid="stSidebar"], .stApp {
+    font-family: 'Plus Jakarta Sans', sans-serif !important;
+    background-color: #000000 !important;
+}
+
+/* Khusus Judul Utama & Sub-judul pakai Orbitron agar sangar */
+.main-title, .filter-card h4 {
+    font-family: 'Orbitron', sans-serif !important;
+}
     </style>
     """, unsafe_allow_html=True)
 
