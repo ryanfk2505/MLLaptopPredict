@@ -11,142 +11,91 @@ warnings.filterwarnings('ignore')
 # Page config
 st.set_page_config(
     page_title="Laptop Recommendation System",
-    page_icon=None,
+    page_icon="💻",
     layout="wide"
 )
 
-# Custom CSS for gradient background and styling
+# --- INJEKSI CSS KUSTOM UNTUK DESAIN KEREN & MODERN ---
 st.markdown("""
-<style>
-    /* Main container gradient background */
-    .stApp {
-        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    <style>
+    /* Mengimpor Google Font Premium */
+    @import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700&display=swap');
+    
+    /* Mengubah Font Global */
+    html, body, [data-testid="stSidebar"], .stApp {
+        font-family: 'Plus Jakarta Sans', sans-serif !important;
     }
     
-    /* Main content area background */
-    .main > div {
-        background: rgba(255, 255, 255, 0.95);
-        border-radius: 15px;
-        padding: 20px;
-        margin: 10px;
-    }
-    
-    /* Title styling */
-    h1, h2, h3 {
-        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    /* Styling Judul Utama */
+    .main-title {
+        font-size: 2.8rem !important;
+        font-weight: 700 !important;
+        background: linear-gradient(135deg, #2563EB, #10B981);
         -webkit-background-clip: text;
         -webkit-text-fill-color: transparent;
-        background-clip: text;
-        font-weight: bold;
+        margin-bottom: 0.2rem;
     }
     
-    /* Sidebar styling */
-    .css-1d391kg, .css-163ttbj, .stSidebar {
-        background: linear-gradient(180deg, #2d1b4e 0%, #1a0f2e 100%);
+    .sub-title {
+        font-size: 1.1rem;
+        color: #64748B;
+        margin-bottom: 2rem;
     }
     
-    /* Sidebar text color */
-    .stSidebar .stMarkdown, .stSidebar label, .stSidebar .stSelectbox label, .stSidebar .stNumberInput label {
-        color: #ffffff !important;
+    /* Styling Kartu Info & Hasil */
+    div[data-testid="stExpander"] {
+        background-color: #FFFFFF !important;
+        border: 1px solid #E2E8F0 !important;
+        border-radius: 12px !important;
+        box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05), 0 2px 4px -1px rgba(0, 0, 0, 0.03) !important;
+        margin-bottom: 1rem !important;
+        transition: all 0.3s ease !important;
     }
     
-    /* Sidebar header */
-    .stSidebar h1, .stSidebar h2, .stSidebar h3 {
-        color: #ffffff !important;
-        -webkit-text-fill-color: #ffffff !important;
-        background: none !important;
+    div[data-testid="stExpander"]:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05) !important;
+        border-color: #3B82F6 !important;
     }
     
-    /* Button styling */
-    .stButton > button {
-        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-        color: white;
-        border: none;
-        padding: 10px 24px;
-        border-radius: 8px;
-        font-weight: bold;
-        transition: transform 0.2s;
+    /* Panel Ringkasan Filter */
+    .filter-card {
+        background: linear-gradient(145deg, #F8FAFC, #F1F5F9);
+        padding: 1.5rem;
+        border-radius: 14px;
+        border: 1px solid #E2E8F0;
     }
     
-    .stButton > button:hover {
-        transform: scale(1.02);
-        background: linear-gradient(135deg, #764ba2 0%, #667eea 100%);
-        color: white;
+    .filter-card h4 {
+        color: #1E293B;
+        margin-top: 0;
+        border-bottom: 2px solid #E2E8F0;
+        padding-bottom: 0.5rem;
     }
     
-    /* Expander styling */
-    .streamlit-expanderHeader {
-        background: linear-gradient(135deg, #f5f0ff 0%, #e8e0ff 100%);
-        border-radius: 10px;
-        font-weight: bold;
+    /* Badge Harga Premium */
+    .price-badge {
+        background-color: #EEF2FF;
+        color: #4F46E5;
+        padding: 0.25rem 0.75rem;
+        border-radius: 20px;
+        font-weight: 600;
+        font-size: 0.95rem;
     }
     
-    /* Info box styling */
-    .stAlert {
-        background: linear-gradient(135deg, #667eea20 0%, #764ba220 100%);
-        border-radius: 10px;
+    /* Footer Modis */
+    .footer-text {
+        text-align: center;
+        color: #94A3B8;
+        font-size: 0.85rem;
+        margin-top: 3rem;
     }
-    
-    /* Success message styling */
-    .stAlert[data-baseweb="notification"] {
-        background: linear-gradient(135deg, #4caf5020 0%, #45a04920 100%);
-    }
-    
-    /* Error message styling */
-    .stAlert[data-baseweb="notification"]:has(div[data-testid="stMarkdownContainer"] p:contains("Error")) {
-        background: linear-gradient(135deg, #f4433620 0%, #d32f2f20 100%);
-    }
-    
-    /* Card/Expander content text */
-    .streamlit-expanderContent {
-        background: white;
-        border-radius: 10px;
-    }
-    
-    /* Metric cards */
-    div[data-testid="stMetric"] {
-        background: linear-gradient(135deg, #667eea10 0%, #764ba210 100%);
-        border-radius: 10px;
-        padding: 10px;
-    }
-    
-    /* Column text contrast */
-    .stMarkdown, p, span, div {
-        color: #1a1a2e;
-    }
-    
-    /* Sidebar selectbox and number input text */
-    .stSidebar .stSelectbox div, .stSidebar .stNumberInput input {
-        color: #1a1a2e !important;
-        background: white !important;
-    }
-    
-    /* Sidebar slider labels */
-    .stSidebar .stSlider label {
-        color: #ffffff !important;
-    }
-    
-    /* Footer styling */
-    footer {
-        color: rgba(255,255,255,0.7) !important;
-    }
-    
-    /* Column containers in main area */
-    .stColumn > div {
-        background: transparent;
-    }
-    
-    /* Expander text contrast */
-    .streamlit-expanderHeader p {
-        color: #4a4a6a !important;
-    }
-</style>
-""", unsafe_allow_html=True)
+    </style>
+    """, unsafe_allow_html=True)
 
-# Title
-st.title("Laptop Recommendation System")
-st.markdown("Temukan laptop terbaik sesuai budget dan kebutuhan Anda")
-st.markdown("---")
+# Header dengan komponen HTML kustom
+st.markdown('<h1 class="main-title">Laptop Recommendation System</h1>', unsafe_allow_html=True)
+st.markdown('<p class="sub-title">Temukan laptop terbaik sesuai budget dan spesifikasi kebutuhan Anda secara presisi.</p>', unsafe_allow_html=True)
 
 # Load data
 @st.cache_data
@@ -179,14 +128,8 @@ def convert_currency(amount_inr, from_currency='INR', to_currency='IDR', exchang
     return amount_inr
 
 def format_currency(amount, currency):
-    symbols = {'INR': 'Rp', 'IDR': 'Rp', 'USD': '$', 'EUR': '€', 'GBP': '£', 'JPY': '¥', 'SGD': 'S$', 'MYR': 'RM'}
-    if currency == 'IDR':
-        symbol = 'Rp'
-    elif currency == 'INR':
-        symbol = 'Rs'
-    else:
-        symbol = symbols.get(currency, '')
-    
+    symbols = {'INR': '₹', 'IDR': 'Rp', 'USD': '$', 'EUR': '€', 'GBP': '£', 'JPY': '¥', 'SGD': 'S$', 'MYR': 'RM'}
+    symbol = symbols.get(currency, '')
     if currency == 'IDR':
         return f"{symbol} {amount:,.0f}"
     return f"{symbol} {amount:,.2f}"
@@ -197,13 +140,14 @@ try:
     knn_model, scaler, label_encoders = load_models()
     unique_vals = load_unique_values()
     exchange_rates = unique_vals.get('exchange_rates', {'INR': 1, 'IDR': 191.5})
-    st.success("Data dan model berhasil dimuat")
+    # toast notifier yang lebih clean dibanding st.success permanen
+    st.toast("Data & model kecerdasan buatan berhasil dimuat!", icon="⚙️")
 except Exception as e:
-    st.error(f"Error: {e}")
+    st.error(f"Error saat memuat sistem: {e}")
     st.stop()
 
-# Sidebar filters
-st.sidebar.header("Filter Pencarian")
+# Sidebar filters dengan desain rapi
+st.sidebar.markdown("### 🛠️ Filter Pencarian")
 
 # Pilihan mata uang
 currency = st.sidebar.selectbox(
@@ -218,36 +162,37 @@ selected_currency = currency_map[currency]
 default_budget_inr = 50000
 default_budget = convert_currency(default_budget_inr, 'INR', selected_currency, exchange_rates)
 budget = st.sidebar.number_input(
-    f"Budget Maksimal ({format_currency(0, selected_currency)[0]})",
+    f"Budget Maksimal ({format_currency(0, selected_currency)[0].strip()})",
     min_value=0.0,
     value=float(default_budget),
-    step=50000.0 if selected_currency == 'IDR' else 5.0
+    step=1000000.0 if selected_currency == 'IDR' else 500.0
 )
 
 # RAM filter
-ram_min = st.sidebar.selectbox("RAM Minimal (GB)", options=[None, 4, 8, 16, 32], format_func=lambda x: "Semua" if x is None else f"{x} GB")
+ram_min = st.sidebar.selectbox("RAM Minimal", options=[None, 4, 8, 16, 32], format_func=lambda x: "Semua Kapasitas" if x is None else f"{x} GB")
 
 # CPU filter
 cpu_options = ['Semua'] + unique_vals['cpu_details']
-cpu_detail = st.sidebar.selectbox("CPU", options=cpu_options)
+cpu_detail = st.sidebar.selectbox("Prosesor (CPU)", options=cpu_options)
 cpu_detail = None if cpu_detail == 'Semua' else cpu_detail
 
 # GPU filter
 gpu_options = ['Semua'] + unique_vals['gpu_details']
-gpu_detail = st.sidebar.selectbox("GPU", options=gpu_options)
+gpu_detail = st.sidebar.selectbox("Kartu Grafis (GPU)", options=gpu_options)
 gpu_detail = None if gpu_detail == 'Semua' else gpu_detail
 
 # Screen size
-screen_size = st.sidebar.slider("Layar Minimal (inci)", min_value=10.0, max_value=18.0, value=13.0, step=0.1)
+screen_size = st.sidebar.slider("Ukuran Layar Minimal (inci)", min_value=10.0, max_value=18.0, value=13.0, step=0.1)
 
 # Rating
-rating_min = st.sidebar.slider("Rating Minimal", 0, 100, 0, 5)
+rating_min = st.sidebar.slider("Rating Pengguna Minimal", 0, 100, 0, 5)
 
 # Jumlah rekomendasi
-n_recs = st.sidebar.slider("Jumlah Rekomendasi", 3, 10, 5)
+n_recs = st.sidebar.slider("Jumlah Hasil Tampilan", 3, 10, 5)
 
+st.sidebar.markdown("---")
 # Search button
-search_button = st.sidebar.button("Cari Laptop", type="primary")
+search_button = st.sidebar.button("Cari Laptop Terbaik", type="primary", use_container_width=True)
 
 # Konversi budget ke INR untuk filter
 budget_inr = convert_currency(budget, selected_currency, 'INR', exchange_rates)
@@ -269,41 +214,54 @@ def recommend_laptops(price_max_inr, ram_min=None, cpu_detail=None, gpu_detail=N
         return pd.DataFrame()
     return filtered.sort_values('Price').head(n).reset_index(drop=True)
 
-# Display
-col1, col2 = st.columns([1, 2])
+# Main Grid Display Layout
+col1, col2 = st.columns([1, 2.5], gap="large")
 
 with col1:
-    st.markdown("### Filter Yang Dipilih")
-    st.markdown(f"**Budget:** {format_currency(budget, selected_currency)}")
-    st.markdown(f"**RAM:** {f'Minimal {ram_min} GB' if ram_min else 'Semua'}")
-    st.markdown(f"**CPU:** {cpu_detail if cpu_detail else 'Semua'}")
-    st.markdown(f"**GPU:** {gpu_detail if gpu_detail else 'Semua'}")
-    st.markdown(f"**Layar:** Minimal {screen_size}\"")
-    st.markdown(f"**Rating:** Minimal {rating_min}")
+    # Membungkus Ringkasan Filter ke dalam komponen HTML Div bergaya kartu kustom
+    st.markdown(f"""
+    <div class="filter-card">
+        <h4>📋 Parameter Aktif</h4>
+        <p><b>Maks Budget:</b> {format_currency(budget, selected_currency)}</p>
+        <p><b>RAM Minimal:</b> {f"{ram_min} GB" if ram_min else "Semua"}</p>
+        <p><b>Spesifikasi CPU:</b> {cpu_detail if cpu_detail else "Semua"}</p>
+        <p><b>Spesifikasi GPU:</b> {gpu_detail if gpu_detail else "Semua"}</p>
+        <p><b>Ukuran Layar:</b> ≥ {screen_size} Inci</p>
+        <p><b>Rating Produk:</b> ≥ {rating_min} / 100</p>
+    </div>
+    """, unsafe_allow_html=True)
 
 with col2:
     if search_button:
-        with st.spinner("Mencari laptop yang sesuai..."):
+        with st.spinner("Menganalisis database dan mencocokkan spesifikasi..."):
             results = recommend_laptops(budget_inr, ram_min, cpu_detail, gpu_detail, screen_size, rating_min, n_recs)
+            
             if len(results) > 0:
-                st.markdown(f"### Hasil Rekomendasi ({len(results)} laptop)")
+                st.markdown(### `Hasil Pencarian ({len(results)} Laptop Ditemukan)`)
+                
                 for idx, row in results.iterrows():
                     price_conv = convert_currency(row['Price'], 'INR', selected_currency, exchange_rates)
-                    with st.expander(f"{row['Model'][:60]} - {format_currency(price_conv, selected_currency)}"):
+                    
+                    # Judul expander kustom menggabungkan teks & badge HTML
+                    expander_title = f"✨ {row['Model'][:55]}... — {format_currency(price_conv, selected_currency)}"
+                    
+                    with st.expander(expander_title):
                         c1, c2 = st.columns(2)
                         with c1:
-                            st.markdown(f"**Harga:** {format_currency(price_conv, selected_currency)}")
-                            st.markdown(f"**RAM:** {row['RAM_GB']:.0f} GB")
-                            st.markdown(f"**SSD:** {row['SSD_GB']:.0f} GB")
+                            st.markdown(f"**💰 Harga Resmi:** <span class='price-badge'>{format_currency(price_conv, selected_currency)}</span>", unsafe_allow_html=True)
+                            st.markdown(f"**🧠 Kapasitas RAM:** `{row['RAM_GB']:.0f} GB` International Standard")
+                            st.markdown(f"**💾 Penyimpanan SSD:** `{row['SSD_GB']:.0f} GB NVMe`高速")
                         with c2:
-                            st.markdown(f"**Layar:** {row['Inches']:.1f}\"")
-                            st.markdown(f"**CPU:** {row['CPU_Detail'][:50]}")
-                            st.markdown(f"**GPU:** {row['GPU_Detail'][:50]}")
+                            st.markdown(f"**🖥️ Dimensi Layar:** `{row['Inches']:.1f}\"` Inci IPS/OLED")
+                            st.markdown(f"**⚡ Central Processor:** `{row['CPU_Detail'][:50]}`")
+                            st.markdown(f"**🎮 Graphics Card:** `{row['GPU_Detail'][:50]}`")
             else:
-                st.error("Tidak ada laptop yang sesuai dengan kriteria Anda")
+                st.error("Kombinasi filter terlalu ketat. Tidak ada laptop yang sesuai dengan kriteria dan budget Anda. Silakan naikkan budget atau kurangi filter spesifikasi.")
     else:
-        st.info("Atur filter di sidebar dan klik tombol 'Cari Laptop' untuk memulai")
+        st.info("💡 Atur preferensi Anda di panel sebelah kiri, kemudian klik tombol 'Cari Laptop Terbaik' untuk memulai komparasi data.")
 
-# Footer
-st.markdown("---")
-st.markdown("Made with Streamlit & Scikit-learn")
+# Footer dengan gaya kustom minimalis
+st.markdown("""
+    <hr style="border-top: 1px solid #E2E8F0; margin-top: 5rem;">
+    <p class="footer-text">Powered by <b>Streamlit Engine</b> & <b>Scikit-Learn KNN Algorithm</b> • © 2026 Laptop Recommendation System</p>
+""", unsafe_allow_html=True)
